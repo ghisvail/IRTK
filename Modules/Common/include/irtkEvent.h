@@ -18,7 +18,6 @@
 #define _IRTKEVENT_H
 
 #include <iostream>
-using namespace std;
 
 
 /// Events that can be observed

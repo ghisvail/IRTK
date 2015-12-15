@@ -18,7 +18,6 @@
 #define _IRTKOBSERVER_H
 
 #include <set>
-using namespace std;
 
 #include <irtkObject.h>
 #include <irtkEvent.h>
