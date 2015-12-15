@@ -15,6 +15,7 @@
  * limitations under the License. */
 
 #include <irtkCofstream.h>
+#include <irtkCxxLib.h>
 
 // -----------------------------------------------------------------------------
 irtkCofstream::irtkCofstream(const char *fname)
@@ -43,25 +44,25 @@ void irtkCofstream::Open(const char *fname)
 {
   size_t len = strlen(fname);
   if (len == 0) {
-    cerr << "irtkCofstream::Open: Filename is empty!" << endl;
+    std::cerr << "irtkCofstream::Open: Filename is empty!" << std::endl;
     exit(1);
   }
   if (len > 3 && (strncmp(fname + len-3, ".gz", 3) == 0 || strncmp(fname + len-3, ".GZ", 3) == 0)) {
 #ifdef HAS_ZLIB
     _ZFile = gzopen(fname, "wb");
     if (_ZFile == NULL) {
-      cerr << "cofstream::Open: Cannot open file " << fname << endl;
+      std::cerr << "cofstream::Open: Cannot open file " << fname << std::endl;
       exit(1);
     }
     _Compressed = true;
 #else
-    cerr << "cofstream::Open: Cannot write compressed file without zlib" << endl;
+    std::cerr << "cofstream::Open: Cannot write compressed file without zlib" << std::endl;
     exit(1);
 #endif
   } else {
     _File = fopen(fname, "wb");
     if (_File == NULL) {
-      cerr << "cofstream::Open: Cannot open file " << fname << endl;
+      std::cerr << "cofstream::Open: Cannot open file " << fname << std::endl;
       exit(1);
     }
     _Compressed = false;
@@ -114,8 +115,8 @@ bool irtkCofstream::Write(const char *data, long offset, long length)
   if (_Compressed) {
     if (offset != -1) {
       if (gztell(_ZFile) > offset) {
-        cerr << "Error: Writing compressed files only supports forward seek (pos="
-             << gztell(_ZFile) << ", offset=" << offset << ")" << endl;
+        std::cerr << "Error: Writing compressed files only supports forward seek (pos="
+             << gztell(_ZFile) << ", offset=" << offset << ")" << std::endl;
         exit(1);
       }
       gzseek(_ZFile, offset, SEEK_SET);

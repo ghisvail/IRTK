@@ -39,13 +39,14 @@
 #include <cctype>
 
 // C header files
-#include <stdio.h>
-#include <stdlib.h>
-#include <limits.h>
-#include <float.h>
-#include <math.h>
-#include <string.h>
-#include <assert.h>
+//#include <stdio.h>
+//#include <stdlib.h>
+//#include <limits.h>
+//#include <float.h>
+//#include <math.h>
+//#include <string.h>
+#include <cstring>
+//#include <assert.h>
 
 // C++11 standard
 //#ifdef NULL
@@ -71,26 +72,26 @@ void swap64(char *, char *, long);
 // =============================================================================
 
 /// General routine to read float from a file stream
-int ReadInt(::std::ifstream &);
+int ReadInt(std::ifstream &);
 
 /// General routine to read float from a file stream
-float ReadFloat(::std::ifstream &);
+float ReadFloat(std::ifstream &);
 
 /// General routine to read list of char (string) from a file stream
-char *ReadString(::std::ifstream &);
+char *ReadString(std::ifstream &);
 
 /// Convert string to numeric value
 template <typename T>
 bool FromString(const char *str, T &value)
 {
   if (str == NULL || str[0] == '\0') return false;
-  ::std::istringstream is(str);
+  std::istringstream is(str);
   return !(is >> value).fail() && is.eof();
 }
 
 /// Convert string to numeric value
 template <typename T>
-bool FromString(const ::std::string &s, T &value)
+bool FromString(const std::string &s, T &value)
 {
   return FromString(s.c_str(), value);
 }
@@ -99,26 +100,26 @@ bool FromString(const ::std::string &s, T &value)
 template <>
 inline bool FromString(const char *str, bool &value)
 {
-  if (strcmp(str, "yes") == 0 || strcmp(str, "Yes") == 0 || strcmp(str, "YES") == 0) {
+  if (std::strcmp(str, "yes") == 0 || std::strcmp(str, "Yes") == 0 || std::strcmp(str, "YES") == 0) {
     value = true;
     return true;
-  } else if (strcmp(str, "no") == 0 || strcmp(str, "No") == 0 || strcmp(str, "NO") == 0) {
+  } else if (std::strcmp(str, "no") == 0 || std::strcmp(str, "No") == 0 || std::strcmp(str, "NO") == 0) {
     value = false;
     return true;
-  } else if (strcmp(str, "true") == 0 || strcmp(str, "True") == 0 || strcmp(str, "TRUE") == 0) {
+  } else if (std::strcmp(str, "true") == 0 || std::strcmp(str, "True") == 0 || std::strcmp(str, "TRUE") == 0) {
     value = true;
     return true;
-  } else if (strcmp(str, "false") == 0 || strcmp(str, "False") == 0 || strcmp(str, "FALSE") == 0) {
+  } else if (std::strcmp(str, "false") == 0 || std::strcmp(str, "False") == 0 || std::strcmp(str, "FALSE") == 0) {
     value = false;
     return true;
-  } else if (strcmp(str, "on") == 0 || strcmp(str, "On") == 0 || strcmp(str, "ON") == 0) {
+  } else if (std::strcmp(str, "on") == 0 || std::strcmp(str, "On") == 0 || std::strcmp(str, "ON") == 0) {
     value = true;
     return true;
-  } else if (strcmp(str, "off") == 0 || strcmp(str, "Off") == 0 || strcmp(str, "OFF") == 0) {
+  } else if (std::strcmp(str, "off") == 0 || std::strcmp(str, "Off") == 0 || std::strcmp(str, "OFF") == 0) {
     value = false;
     return true;
   } else {
-    ::std::istringstream is(str);
+    std::istringstream is(str);
     return !(is >> value).fail() && is.eof();
   }
 }
@@ -127,17 +128,17 @@ inline bool FromString(const char *str, bool &value)
 template <>
 inline bool FromString(const char *str, float &value)
 {
-  if (strcmp(str, "nan") == 0 || strcmp(str, "NaN") == 0) {
-    value = numeric_limits<float>::quiet_NaN();
+  if (std::strcmp(str, "nan") == 0 || std::strcmp(str, "NaN") == 0) {
+    value = std::numeric_limits<float>::quiet_NaN();
     return true;
-  } else if (strcmp(str, "-inf") == 0 || strcmp(str, "-Inf") == 0) {
-    value = -numeric_limits<float>::infinity();
+  } else if (std::strcmp(str, "-inf") == 0 || std::strcmp(str, "-Inf") == 0) {
+    value = -std::numeric_limits<float>::infinity();
     return true;
-  } else if (strcmp(str, "+inf") == 0 || strcmp(str, "inf") == 0 || strcmp(str, "+Inf") == 0 || strcmp(str, "Inf") == 0) {
-    value = +numeric_limits<float>::infinity();
+  } else if (std::strcmp(str, "+inf") == 0 || std::strcmp(str, "inf") == 0 || std::strcmp(str, "+Inf") == 0 || std::strcmp(str, "Inf") == 0) {
+    value = +std::numeric_limits<float>::infinity();
     return true;
   } else {
-    ::std::istringstream is(str);
+    std::istringstream is(str);
     return !(is >> value).fail() && is.eof();
   }
 }
@@ -146,57 +147,57 @@ inline bool FromString(const char *str, float &value)
 template <>
 inline bool FromString(const char *str, double &value)
 {
-  if (strcmp(str, "nan") == 0 || strcmp(str, "NaN") == 0) {
-    value = numeric_limits<double>::quiet_NaN();
+  if (std::strcmp(str, "nan") == 0 || std::strcmp(str, "NaN") == 0) {
+    value = std::numeric_limits<double>::quiet_NaN();
     return true;
-  } else if (strcmp(str, "-inf") == 0 || strcmp(str, "-Inf") == 0) {
-    value = -numeric_limits<double>::infinity();
+  } else if (std::strcmp(str, "-inf") == 0 || std::strcmp(str, "-Inf") == 0) {
+    value = -std::numeric_limits<double>::infinity();
     return true;
-  } else if (strcmp(str, "+inf") == 0 || strcmp(str, "inf") == 0 || strcmp(str, "+Inf") == 0 || strcmp(str, "Inf") == 0) {
-    value = +numeric_limits<double>::infinity();
+  } else if (std::strcmp(str, "+inf") == 0 || std::strcmp(str, "inf") == 0 || std::strcmp(str, "+Inf") == 0 || std::strcmp(str, "Inf") == 0) {
+    value = +std::numeric_limits<double>::infinity();
     return true;
   } else {
-    ::std::istringstream is(str);
+    std::istringstream is(str);
     return !(is >> value).fail() && is.eof();
   }
 }
 
 /// Convert numeric value to string
 template <typename T>
-string ToString(const T &value, int w = 0, char c = ' ', bool left = false)
+std::string ToString(const T &value, int w = 0, char c = ' ', bool left = false)
 {
-  ::std::ostringstream os;
+  std::ostringstream os;
   os.fill(c);
-  if (left) os << left;
-  else      os << right;
-  os << setw(w) << value;
+  if (left) os << std::left;
+  else      os << std::right;
+  os << std::setw(w) << value;
   return os.str();
 }
 
 /// Convert boolean value to string
 template <>
-inline string ToString(const bool &value, int w, char c, bool left)
+inline std::string ToString(const bool &value, int w, char c, bool left)
 {
-  ::std::ostringstream os;
+  std::ostringstream os;
   os.fill(c);
-  if (left) os << left;
-  else      os << right;
-  os << setw(w) << (value ? "Yes" : "No");
+  if (left) os << std::left;
+  else      os << std::right;
+  os << std::setw(w) << (value ? "Yes" : "No");
   return os.str();
 }
 
 /// Write "<name> = <value>" configuration entry to output stream
 template <class TValue>
-inline void PrintParameter(ostream &os, const char *name, const TValue &value)
+inline void PrintParameter(std::ostream &os, const char *name, const TValue &value)
 {
-  const streamsize w = os.width(40);
-  os << left << name << setw(0) << " = " << value << endl;
+  const std::streamsize w = os.width(40);
+  os << std::left << name << std::setw(0) << " = " << value << std::endl;
   os.width(w);
 }
 
 /// Write "<name> = <value>" configuration entry to output stream
 template <class TValue>
-inline void PrintParameter(ostream &os, const string &name, const TValue &value)
+inline void PrintParameter(std::ostream &os, const std::string &name, const TValue &value)
 {
   PrintParameter(os, name.c_str(), value);
 }
@@ -209,8 +210,8 @@ inline void PrintParameter(ostream &os, const string &name, const TValue &value)
 ///          if negative, the last n parts are returned, and if positive,
 ///          the first n parts are returned.
 ///
-/// @returns Parts of the string.
-vector<string> Split(string s, const char *d, int n = 0);
+/// @returns Parts of the std::string.
+std::vector<std::string> Split(std::string s, const char *d, int n = 0);
 
 
 #endif

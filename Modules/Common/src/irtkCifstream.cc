@@ -15,6 +15,7 @@
  * limitations under the License. */
 
 #include <irtkCifstream.h>
+#include <irtkCxxLib.h>
 
 // -----------------------------------------------------------------------------
 irtkCifstream::irtkCifstream(const char *fname)
@@ -42,7 +43,7 @@ void irtkCifstream::Open(const char *fname)
   _File = fopen(fname, "rb");
 #endif
   if (_File == NULL) {
-    cerr << "cifstream::Open: Cannot open file " << fname << endl;
+    std::cerr << "cifstream::Open: Cannot open file " << fname << std::endl;
     exit(1);
   }
 }

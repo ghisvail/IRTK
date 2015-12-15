@@ -17,7 +17,7 @@
 #ifndef _IRTKBSPLINE_H
 #define _IRTKBSPLINE_H
 
-#include <irtkCommon.h>
+#include <irtkCxxLib.h>
 
 
 /**
@@ -693,7 +693,7 @@ inline void ComputeBSplineIndicesAndWeights(double x, double y, int spline_degre
       yWeight[4] = t0 - t1;
       break;
     default:
-      cerr << "ComputeBSplineIndicesAndWeights: Unsupported B-spline degree: " << spline_degree << endl;
+      std::cerr << "ComputeBSplineIndicesAndWeights: Unsupported B-spline degree: " << spline_degree << std::endl;
       exit(1);
   }
 }
@@ -864,7 +864,7 @@ inline void ComputeBSplineIndicesAndWeights(double x, double y, double z, int sp
       zWeight[4] = t0 - t1;
       break;
     default:
-      cerr << "ComputeBSplineIndicesAndWeights: Unsupported B-spline degree: " << spline_degree << endl;
+      std::cerr << "ComputeBSplineIndicesAndWeights: Unsupported B-spline degree: " << spline_degree << std::endl;
       exit(1);
   }
 }
@@ -1080,7 +1080,7 @@ inline void ComputeBSplineIndicesAndWeights(double x, double y, double z, double
       tWeight[4] = t0 - t1;
       break;
     default:
-      cerr << "ComputeBSplineIndicesAndWeights: Unsupported B-spline degree: " << spline_degree << endl;
+      std::cerr << "ComputeBSplineIndicesAndWeights: Unsupported B-spline degree: " << spline_degree << std::endl;
       exit(1);
   }
 }
