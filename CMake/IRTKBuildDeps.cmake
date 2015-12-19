@@ -70,17 +70,29 @@ endif()
 
 option(WITH_FLANN "Build with optional support for FLANN." OFF)
 if(WITH_FLANN)
-  find_package(LibFLANN REQUIRED)
-  include_directories(${LIBFLANN_INCLUDE_DIRS})
-  link_libraries(${LIBFLANN_LIBRARIES})
+  find_package(FLANN)
+  if(NOT FLANN_FOUND)
+    message(STATUS "Optional support for FLANN was requested but the"
+            " library was not found. Please verify whether the library is"
+            " installed on the system, or specify its location manually using"
+            " the FLANN_ROOT CMake or environment variable.")
+  endif()
+  include_directories(${FLANN_INCLUDE_DIRS})
+  link_libraries(${FLANN_LIBRARIES})
   add_definitions(-DHAS_FLANN -DHAVE_FLANN)
 endif()
 
 option(WITH_LBFGS "Build with optional support for LBFGS." OFF)
 if(WITH_LBFGS)
-  find_package(LibLBFGS REQUIRED)
-  include_directories(${LIBLBFGS_INCLUDE_DIRS})
-  link_libraries(${LIBLBFGS_LIBRARIES})
+  find_package(LibLBFGS)
+  if(NOT LibLBFGS_FOUND)
+    message(STATUS "Optional support for LBFGS was requested but the"
+            " library was not found. Please verify whether the library is"
+            " installed on the system, or specify its location manually using"
+            " the LIBLBFGS_ROOT CMake or environment variable.")
+  endif()
+  include_directories(${LibLBFGS_INCLUDE_DIRS})
+  link_libraries(${LibLBFGS_LIBRARIES})
   add_definitions(-DHAS_LBFGS -DHAVE_LBFGS)
 endif()
 
@@ -94,9 +106,15 @@ endif()
 
 option(WITH_NIFTI "Build with optional support for NIFTI." ON)
 if(WITH_NIFTI)
-  find_package(NifTICLib REQUIRED)
-  include_directories(${NIFTICLIB_INCLUDE_DIRS})
-  link_libraries(${NIFTICLIB_LIBRARIES})
+  find_package(NiftiCLib)
+  if(NOT NiftiCLib_FOUND)
+    message(STATUS "Optional support for Nifti was requested but the"
+            " library was not found. Please verify whether the library is"
+            " installed on the system, or specify its location manually using"
+            " the NIFTICLIB_ROOT CMake or environment variable.")
+  endif()
+  include_directories(${NiftiCLib_INCLUDE_DIRS})
+  link_libraries(${NiftiCLib_LIBRARIES})
   add_definitions(-DHAS_NIFTI -DHAVE_NIFTI)
 endif()
 
